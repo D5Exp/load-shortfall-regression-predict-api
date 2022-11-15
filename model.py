@@ -29,8 +29,6 @@ from scipy.stats import pearsonr
 from scipy.stats import norm
 from sklearn.preprocessing import LabelEncoder
 # Settings to produce nice plots in a Jupyter notebook
-plt.style.use('fivethirtyeight')
-%matplotlib inline
 import seaborn as sns
 # Libraries for data preparation and model building
 from sklearn.model_selection import train_test_split
