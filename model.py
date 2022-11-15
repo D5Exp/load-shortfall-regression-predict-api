@@ -94,6 +94,7 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
     df_new=data
     df_new['Valencia_pressure'] = df_new['Valencia_pressure'].fillna(df_new['Valencia_pressure'].mode()[int(0)])
+    df_new['Valencia_wind_deg']=df_new['Valencia_wind_deg'].astype(float)
     df_new = df_new.drop(['Unnamed: 0'], axis = 1)
     df_new['time']=pd.to_datetime(data['time'])
     df_new["day"] = df_new["time"].dt.day
