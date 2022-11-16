@@ -92,43 +92,8 @@ def _preprocess_data(data):
     # The code below is for demonstration purposes only. You will not
     # receive marks for submitting this code in an unchanged state.
     # ---------------------------------------------------------------
-    df_new=data
-    df_new['Valencia_pressure'] = df_new['Valencia_pressure'].fillna(df_new['Valencia_pressure'].mode()[0])
-    df_new['Valencia_wind_deg']=df_new['Valencia_wind_deg'].astype(float)
-    df_new = df_new.drop(['Unnamed: 0'], axis = 1)
-    df_new['time']=pd.to_datetime(data['time'])
-    df_new["day"] = df_new["time"].dt.day
-    df_new["month"] = df_new["time"].dt.month
-    df_new["year"] = df_new["time"].dt.year
-    df_new["weekday"] = df_new["time"].dt.weekday
-    df_new["hour"] = df_new["time"].dt.hour
-    df_new['Valencia_wind_deg'] = df_new['Valencia_wind_deg'].str.extract('(\d+)')
-    df_new['Seville_pressure'] = df_new['Seville_pressure'].str.extract('(\d+)')
-    df_new[['Valencia_wind_deg','Seville_pressure']] = df_new[['Valencia_wind_deg','Seville_pressure']].apply(pd.to_numeric)
-    def g(x):
-        min=0
-        incre=36
-        for i in range (1,11):
-            if x==i : x=random.uniform(min+(i-1)*incre,min+incre*i)
-        return x
-    df_new['Valencia_wind_deg']=df_new['Valencia_wind_deg'].apply(lambda row : g(row))
-    max_17=30.262*33.9639
-    min_17=29.613*33.9639
-    max_16=30.695*33.9639
-    min_16=29.431*33.9639
-    max_15=30.670*33.9639
-    min_15=29.472*33.9639
-    avg_min=(min_17+min_16+min_15)/3
-    avg_max=(max_17+max_16+max_15)/3
-    incre=(avg_max-avg_min)/25
-
-    def f(x):
-        for i in range(0,26):
-            if x==i: x=random.uniform(avg_min+(i-1)*incre, avg_min+i*incre)
-        return round(x)
-
-    df_new["Seville_pressure"] = df_new["Seville_pressure"].apply(lambda row: f(row))
-    df_new = df_new.drop(['Bilbao_rain_1h', 
+    data = data.drop(['Unnamed: 0', "time"], axis = 1)
+    data = data.drop(['Bilbao_rain_1h', 
                                     'Bilbao_clouds_all', 
                                     'Seville_clouds_all', 
                                     'Madrid_clouds_all', 
@@ -149,31 +114,17 @@ def _preprocess_data(data):
                       'Madrid_temp_max',
                       'Madrid_temp_min', 
                       'Seville_temp_min', 
-                      'Valencia_temp_min'], axis=1)
-    def n_season(x):
-        Seasons=["Winter","Spring","Summer","Autumn"]
-        if x in [12, 1, 2] : x=Seasons[0]
-        else: 
-            if x in [3, 4, 5] : x=Seasons[1]
-            else: 
-                if x in [6, 7, 8] : x=Seasons[2]
-                else: x=Seasons[3]
-        return str(x)
-    df_new["Season"]=df_new["month"].apply(lambda x: n_season(x))
+                      'Valencia_temp_min', 'Seville_pressure', "Valencia_wind_deg", 'Valencia_pressure'], axis=1)
     column_titles = [col for col in df_new.columns if col!= 'load_shortfall_3h'] + ['load_shortfall_3h']
-    df_new = df_new.reindex(columns=column_titles)
-    df_new=df_new.drop(['time'],axis=1)
-    df_new=pd.get_dummies(df_new)
+    data = data.reindex(columns=column_titles)
     # ----------- Replace this code with your own preprocessing steps --------
     predict_vector = feature_vector_df[['Madrid_wind_speed', 'Valencia_wind_deg', 'Valencia_wind_speed',
        'Seville_humidity', 'Madrid_humidity', 'Bilbao_wind_speed',
        'Bilbao_wind_deg', 'Barcelona_wind_speed', 'Barcelona_wind_deg',
-       'Seville_wind_speed', 'Seville_pressure', 'Barcelona_pressure',
-       'Bilbao_pressure', 'Valencia_pressure', 'Seville_temp_max',
+       'Seville_wind_speed', 'Barcelona_pressure',
+       'Bilbao_pressure', 'Seville_temp_max',
        'Madrid_pressure', 'Valencia_temp_max', 'Valencia_temp', 'Seville_temp',
-       'Valencia_humidity', 'Barcelona_temp', 'Bilbao_temp', 'Madrid_temp',
-       'day', 'month', 'year', 'weekday', 'hour',
-       'Season_Autumn', 'Season_Spring', 'Season_Summer', 'Season_Winter']]
+       'Valencia_humidity', 'Barcelona_temp', 'Bilbao_temp', 'Madrid_temp']]
     
     # ----------- Replace this code with your own preprocessing steps --------
     #predict_vector = feature_vector_df[['Madrid_wind_speed','Bilbao_rain_1h','Valencia_wind_speed']]
