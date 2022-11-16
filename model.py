@@ -92,8 +92,8 @@ def _preprocess_data(data):
     # The code below is for demonstration purposes only. You will not
     # receive marks for submitting this code in an unchanged state.
     # ---------------------------------------------------------------
-    data = data.drop(['Unnamed: 0', "time"], axis = 1)
-    data = data.drop(['Bilbao_rain_1h', 
+    feature_vector_df = feature_vector_df.drop(['Unnamed: 0', "time"], axis = 1)
+    feature_vector_df = feature_vector_df.drop(['Bilbao_rain_1h', 
                                     'Bilbao_clouds_all', 
                                     'Seville_clouds_all', 
                                     'Madrid_clouds_all', 
@@ -115,8 +115,8 @@ def _preprocess_data(data):
                       'Madrid_temp_min', 
                       'Seville_temp_min', 
                       'Valencia_temp_min', 'Seville_pressure', "Valencia_wind_deg", 'Valencia_pressure'], axis=1)
-    column_titles = [col for col in df_new.columns if col!= 'load_shortfall_3h'] + ['load_shortfall_3h']
-    data = data.reindex(columns=column_titles)
+    column_titles = [col for col in feature_vector_df.columns if col!= 'load_shortfall_3h'] + ['load_shortfall_3h']
+    feature_vector_df = feature_vector_df.reindex(columns=column_titles)
     # ----------- Replace this code with your own preprocessing steps --------
     predict_vector = feature_vector_df[['Madrid_wind_speed', 'Valencia_wind_deg', 'Valencia_wind_speed',
        'Seville_humidity', 'Madrid_humidity', 'Bilbao_wind_speed',
