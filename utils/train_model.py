@@ -25,13 +25,13 @@ X_train = train.drop(['load_shortfall_3h'],axis=1)
 
 # Fit model
 #lm_regression = LinearRegression(normalize=True)
-RF_reg =RandomForestRegressor(n_estimators=2500,max_depth=50, random_state=0)
+RF_reg =RandomForestRegressor(n_estimators=100, random_state=0)
 print ("Training Model...")
 #lm_regression.fit(X_train, y_train)
 RF_reg.fit(X_train, y_train)
 
 # Pickle model for use within our API
-save_path = '../assets/trained-models/load_shortfall_simple_lm_regression.pkl'
+save_path = '../assets/trained-models/load_shortfall_RF_regression.pkl'
 print (f"Training completed. Saving model to: {save_path}")
 #pickle.dump(lm_regression, open(save_path,'wb'))
 pickle.dump(RF_reg, open(save_path,'wb'))
