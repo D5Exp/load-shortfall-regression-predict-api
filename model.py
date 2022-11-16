@@ -118,7 +118,7 @@ def _preprocess_data(data):
     column_titles = [col for col in feature_vector_df.columns if col!= 'load_shortfall_3h'] + ['load_shortfall_3h']
     feature_vector_df = feature_vector_df.reindex(columns=column_titles)
     # ----------- Replace this code with your own preprocessing steps --------
-    predict_vector = feature_vector_df[['Madrid_wind_speed', 'Valencia_wind_deg', 'Valencia_wind_speed',
+    predict_vector = feature_vector_df[['Madrid_wind_speed', 'Valencia_wind_speed',
        'Seville_humidity', 'Madrid_humidity', 'Bilbao_wind_speed',
        'Bilbao_wind_deg', 'Barcelona_wind_speed', 'Barcelona_wind_deg',
        'Seville_wind_speed', 'Barcelona_pressure',
