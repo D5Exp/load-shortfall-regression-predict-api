@@ -35,7 +35,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn import metrics 
 from sklearn.tree import DecisionTreeRegressor
-from xgboost.sklearn import XGBRegressor
 from sklearn.metrics import accuracy_score
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
